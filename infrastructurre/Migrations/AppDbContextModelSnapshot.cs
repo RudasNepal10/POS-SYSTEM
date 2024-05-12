@@ -297,6 +297,75 @@ namespace infrastructurre.Migrations
                     b.ToTable("Customer", "DBSchema");
                 });
 
+            modelBuilder.Entity("infrastructurre.Entities.PaymentMethodATT", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentMethod", "DBSchema");
+                });
+
+            modelBuilder.Entity("infrastructurre.Entities.SaleProductATT", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("customer_Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("payment_method_id")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("total_amount")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("customer_Id");
+
+                    b.HasIndex("payment_method_id");
+
+                    b.ToTable("Sales", "DBSchema");
+                });
+
+            modelBuilder.Entity("infrastructurre.Entities.SalesProduct", b =>
+                {
+                    b.Property<long>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("id"));
+
+                    b.Property<long>("product_id")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<long>("sales_id")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("sales_id");
+
+                    b.ToTable("SalesProduct", "DBSchema");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -357,6 +426,41 @@ namespace infrastructurre.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("infrastructurre.Entities.SaleProductATT", b =>
+                {
+                    b.HasOne("infrastructurre.Entities.CustomerATT", "Customer")
+                        .WithMany()
+                        .HasForeignKey("customer_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("infrastructurre.Entities.PaymentMethodATT", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("payment_method_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("PaymentMethod");
+                });
+
+            modelBuilder.Entity("infrastructurre.Entities.SalesProduct", b =>
+                {
+                    b.HasOne("infrastructurre.Entities.SaleProductATT", "Sales")
+                        .WithMany("SalesProduct")
+                        .HasForeignKey("sales_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sales");
+                });
+
+            modelBuilder.Entity("infrastructurre.Entities.SaleProductATT", b =>
+                {
+                    b.Navigation("SalesProduct");
                 });
 #pragma warning restore 612, 618
         }

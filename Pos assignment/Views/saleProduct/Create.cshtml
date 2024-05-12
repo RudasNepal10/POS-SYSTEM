@@ -7,67 +7,147 @@
 </head>
 
 <body>
-    <div class="Sale">
+    <div class="AddSales">
     </div><!-- End Page Title -->
     <section class="section">
         <div class="row">
-            <div class="col-lg-12">
+
+           
+
+            <div class="ibox col-lg-12">
+
+                <div class="ibox-title">
+                    <h5>Add Sales</h5>
+                </div>
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">sale</h5>
-                        @using (Html.BeginForm(FormMethod.Post, new { @Class = "row g-3" }))
-                        {
-                            <div class="    col-md-4">
-                                <label for="inputText" class="form-label">ProductName</label>
-                                @Html.TextBoxFor(a => a.ProductName, new { type = "text", placeholder = "Name", @Class = "form-control", required = "required" })
-                                <div class="invalid-feedback">
-                                    @Html.ValidationMessageFor(a => a.ProductName, null, new { @Class = "text-danger" })
+                        <form method="post" action="Create" enctype="multipart/form-data" class="row g-3">
+                            <div class="row col-md-12">
+                                <div class="col-md-4">
+                                    <label class="form-label">Product</label>
+                                    @Html.DropDownList("product_id", ViewBag.ProductList as SelectList, "-- Select --", new { @Class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(a => a.product_id, null, new { @Class = "text-danger" })
                                 </div>
 
-                            </div>
-                            <div class="    col-md-4">
-                                <label for="inputText" class="form-label">Date</label>
-                                @Html.TextBoxFor(a => a.SaleDate, new { placeholder = "Date", @Class = "form-control", required = "required" })
-                                <div class="invalid-feedback">
-                                    @Html.ValidationMessageFor(a => a.SaleDate, null, new { @Class = "text-danger" })
+                                <div class="col-md-4">
+                                    <label for="inputText" class="form-label">Quantity</label>
+                                    @Html.TextBoxFor(a => a.quantity, new { placeholder = "0", @Class = "form-control", required = "required", type = "number", min = "0", step = "1" })
+                                    <div class="invalid-feedback">
+                                        @Html.ValidationMessageFor(a => a.quantity, null, new { @Class = "text-danger" })
+                                    </div>
                                 </div>
 
-                            </div>
-                            <div class="    col-md-4">
-                                <label for="inputText" class="form-label">Quantity</label>
-                                @Html.TextBoxFor(a => a.Quantity, new { type = "text", placeholder = "Quantity", @Class = "form-control", required = "required" })
-                                <div class="invalid-feedback">
-                                    @Html.ValidationMessageFor(a => a.Quantity, null, new { @Class = "text-danger" })
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary btn-addProduct" type="button" style="margin-top: 25px;">Add</button>
                                 </div>
 
-                            </div>
-                            <div class="    col-md-4">
-                                <label for="inputText" class="form-label">TotalAmount</label>
-                                @Html.TextBoxFor(a => a.TotalAmount, new { type = "text", placeholder = "Amount", @Class = "form-control", required = "required" })
-                                <div class="invalid-feedback">
-                                    @Html.ValidationMessageFor(a => a.TotalAmount, null, new { @Class = "text-danger" })
+                                <div class="mt-4 col-md-9">
+                                    <h1 class="text-center" style="color:red">Item List</h1>
+
+                                    <table id="productTable" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Quantity</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Table rows will be dynamically added here -->
+                                        </tbody>
+                                    </table>
                                 </div>
 
+
                             </div>
 
+                            <div class="row mt-4 col-md-12">
 
-                            <div class="col-15">
+                                <div class="col-md-4">
+                                    <label class="form-label">Customer</label>
+                                    @Html.DropDownList("customer_Id", ViewBag.CustomerList as SelectList, "-- Select --", new { @Class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(a => a.customer_Id, null, new { @Class = "text-danger" })
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Payment Method</label>
+                                    @Html.DropDownList("payment_method_id", ViewBag.PaymentMethodList as SelectList, "-- Select --", new { @Class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(a => a.payment_method_id, null, new { @Class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-4 mt-4">
                                 <button class="btn btn-primary" type="submit">Save form</button>
                             </div>
 
 
 
-                        }
+
+                        </form>
+
+
+
+
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
 
+
 </html>
+
+@section scripts {
+    <script>
+
+
+        $(document).ready(function () {
+            $('.btn-addProduct').on('click', function () {
+                var selectedValue = $('#product_id').val();
+                var quantity = $('#quantity').val();
+                var selectedText = $('#product_id option:selected').text();
+
+                // Check if the selected value is empty
+                if (selectedValue === '') {
+                    ShowToastMessage('error', 'Please select a product.')
+                    return;
+                }
+
+                // Check if the product already exists in the table
+                var exists = false;
+                $('#productTable tbody tr').each(function () {
+                    var productName = $(this).find('td:first-child').text();
+                    if (productName === selectedText) {
+                        exists = true;
+                        return false; // Exit the loop early
+                    }
+                });
+
+                if (!exists) {
+                    // Append the selected values to the table
+                    $('#productTable tbody').append('<tr><td>' + selectedText + '</td><td>' + quantity + '</td><td><button class="btn btn-danger btn-removeProduct">Remove</button></td></tr>');
+
+                    // Clear the form fields
+                    $('#product_id').val('');
+                    $('#quantity').val('');
+                } else {
+                    ShowToastMessage('error', 'Product Already Exists in the table.')
+                }
+            });
+
+            // Remove row from table when remove button clicked
+            $(document).on('click', '.btn-removeProduct', function () {
+                $(this).closest('tr').remove();
+                ShowToastMessage('success', 'Product removed.')
+            });
+        });
+
+    </script>
+}

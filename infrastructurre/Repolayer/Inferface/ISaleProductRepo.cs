@@ -15,5 +15,6 @@ namespace infrastructurre.Repolayer.Inferface
 
         SaleProductDTO GetSaleProductDataForUpdate(long id);
         void UpdateSaleProduct(SaleProductDTO dto);
+        List<PaymentMethodATT> PaymentMethodList();
     }
 }

@@ -1,7 +1,10 @@
 ﻿using infrastructurre.Entities.Baseclass;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,9 +12,30 @@ namespace infrastructurre.Entities
 {
     public class SaleProductATT : BaseEntities
     {
-        public DateTime SaleDate { get; set; }
-        public string ProductName { get; set; }
-        public int Quantity { get; set; }
-        public decimal TotalAmount { get; set; }
+        public decimal quantity { get; set; }
+        public long customer_Id { get; set; }
+        [ForeignKey(nameof(customer_Id))]
+        public virtual CustomerATT Customer { get; set; }
+        public long payment_method_id { get; set; }
+
+        [ForeignKey(nameof(payment_method_id))]
+        public virtual PaymentMethodATT PaymentMethod { get; set; }
+
+        public decimal total_amount { get; set; }
+
+        public virtual List<SalesProduct> SalesProduct { get; set; } = new List<SalesProduct>();
+    }
+
+
+    public class SalesProduct
+    {
+        public decimal quantity { get; set; }
+        public long id { get; set; }
+         public long product_id { get; set;}
+
+        public long sales_id { get; set; }
+        [ForeignKey(nameof(sales_id))]
+        public virtual SaleProductATT Sales { get; set; }
+       
     }
 }

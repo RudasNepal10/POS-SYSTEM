@@ -22,7 +22,7 @@
                         <h5 class="card-title">sale</h5>
                         @using (Html.BeginForm(FormMethod.Post, new { @Class = "row g-3" }))
                         {
-                            <div class="    col-md-4">
+                            @* <div class="    col-md-4">
                                 <label for="inputText" class="form-label">ProductName</label>
                                 @Html.TextBoxFor(a => a.ProductName, new { type = "text", placeholder = "Name", @Class = "form-control", required = "required" })
                                 <div class="invalid-feedback">
@@ -53,7 +53,7 @@
                                     @Html.ValidationMessageFor(a => a.TotalAmount, null, new { @Class = "text-danger" })
                                 </div>
 
-                            </div>
+                            </div> *@
 
 
                             <div class="col-15">

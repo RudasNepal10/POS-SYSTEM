@@ -20,6 +20,10 @@ namespace infrastructurre.DBContext
         public DbSet<AddProductATT> Product { get; set; }
         public DbSet<CategoryATT> Category { get; set; }
         public DbSet<CustomerATT> Customer { get; set; }
+        public DbSet<SaleProductATT> Sales { get; set; }
+        public DbSet<PaymentMethodATT> PaymentMethod { get; set; }
+        public DbSet<SalesProduct> SalesProduct { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)

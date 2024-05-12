@@ -12,9 +12,11 @@ namespace infrastructurre.Repolayer.Implementation
     public class SaleProductRepo : ISaleProductRepo
     {
         private readonly IBaseRepo<SaleProductATT> _repo;
-        public SaleProductRepo(IBaseRepo<SaleProductATT>repo)
+        private readonly IBaseRepo<PaymentMethodATT> _paymentrepo;
+        public SaleProductRepo(IBaseRepo<SaleProductATT>repo, IBaseRepo<PaymentMethodATT> paymentrepo)
         {
-            _repo = repo;    
+            _repo = repo;
+            _paymentrepo = paymentrepo;
         }
         public void save(SaleProductDTO dto) 
         {
@@ -25,6 +27,13 @@ namespace infrastructurre.Repolayer.Implementation
         {
             var saleproductList = _repo.GetQueryable().ToList();
             return saleproductList;
+        }
+
+
+        public List<PaymentMethodATT> PaymentMethodList()
+        {
+            var paymentMethodList = _paymentrepo.GetQueryable().ToList();
+            return paymentMethodList;
         }
 
 
@@ -42,18 +51,18 @@ namespace infrastructurre.Repolayer.Implementation
         }
         SaleProductATT MapFromDtoToEntity(SaleProductDTO dto, SaleProductATT entity) 
         {
-         entity.ProductName = dto.ProductName;
-         entity.SaleDate = dto.SaleDate;
-         entity.TotalAmount = dto.TotalAmount;
-         entity.Quantity = dto.Quantity;
+         //entity.ProductName = dto.ProductName;
+         //entity.SaleDate = dto.SaleDate;
+         //entity.TotalAmount = dto.TotalAmount;
+         //entity.Quantity = dto.Quantity;
          return entity;
         }
         SaleProductDTO MapFromEntityToDto(SaleProductDTO dto, SaleProductATT entity) 
         {
-         dto.ProductName = entity.ProductName;
-         dto.SaleDate = entity.SaleDate;
-         dto.TotalAmount = entity.TotalAmount;
-         dto.Quantity = entity.Quantity;
+         //dto.ProductName = entity.ProductName;
+         //dto.SaleDate = entity.SaleDate;
+         //dto.TotalAmount = entity.TotalAmount;
+         //dto.Quantity = entity.Quantity;
          return dto;
         
         }

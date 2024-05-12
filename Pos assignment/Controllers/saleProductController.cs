@@ -1,6 +1,8 @@
 ﻿using infrastructurre.DTO;
+using infrastructurre.Entities;
 using infrastructurre.Repolayer.Inferface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Pos_assignment.Helpers;
 
 namespace Pos_assignment.Controllers
@@ -8,12 +10,25 @@ namespace Pos_assignment.Controllers
     public class saleProductController : Controller
     {
         private readonly ISaleProductRepo _SaleProductrepo;
-        public saleProductController(ISaleProductRepo saleproductrepo)
+        private readonly IAddProductRepo _productrepo;
+        private readonly ICustomerRepo _customerrepo;
+        public saleProductController(ISaleProductRepo saleproductrepo, IAddProductRepo productrepo, ICustomerRepo customerrepo)
         {
             _SaleProductrepo = saleproductrepo;
+            _productrepo = productrepo;
+            _customerrepo = customerrepo;
+
         }
         public IActionResult Create()
         {
+
+            List<AddProductATT> productList = _productrepo.List().ToList();
+            List<PaymentMethodATT> paymentMethodList = _SaleProductrepo.PaymentMethodList().ToList();
+            List<CustomerATT> customerList = _customerrepo.List().ToList();
+            ViewBag.ProductList = new SelectList(productList, "Id", "Productname");
+            ViewBag.PaymentMethodList = new SelectList(paymentMethodList, "Id", "Name");
+            ViewBag.CustomerList = new SelectList(customerList, "Id", "CustomerName");
+
             return View();
         }
         [HttpPost]

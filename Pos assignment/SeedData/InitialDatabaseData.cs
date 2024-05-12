@@ -2,6 +2,7 @@
 using infrastructurre.DTO;
 using infrastructurre.Entities;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace Pos_assignment.SeedData
 {
@@ -26,7 +27,25 @@ namespace Pos_assignment.SeedData
             await context.SaveChangesAsync();
         }
 
-        
+        public static async Task SeedPaymentMethodData(AppDbContext context)
+        {
+            //seed paymentMethod
+            var paymentMethods = context.PaymentMethod.ToList();
+            if (paymentMethods.Count == 0)
+            {
+                var yearlist = new List<PaymentMethodATT>() {
+                    new PaymentMethodATT(){
+                        Id = 1,
+                        Name = "Cash",
+                    },
+                };
+                context.PaymentMethod.AddRange(yearlist);
+                await context.SaveChangesAsync();
+            }
+        }
+
+
+
 
 
         public static IHost SeedData(this IHost host)
@@ -37,7 +56,8 @@ namespace Pos_assignment.SeedData
                 var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
 
                 SeedUsers(context, userManager).GetAwaiter().GetResult();
-               
+                SeedPaymentMethodData(context).GetAwaiter().GetResult();
+
             }
             return host;
         }
