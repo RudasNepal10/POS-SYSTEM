@@ -1,0 +1,212 @@
+﻿@using Newtonsoft.Json
+@{
+    bool isAlertPresent = false;
+    var userInfoJson = "";
+    if (TempData["message"] != null)
+    {
+        userInfoJson = TempData["message"].ToString();
+        isAlertPresent = true;
+    }
+}
+
+@using infrastructurre.DTO
+@using Microsoft.AspNetCore.Identity
+@using infrastructurre.Entities
+@inject SignInManager<User> signInManager;
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Maskey Grocery Mart</title>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @* <link href="~/template/css/bootstrap.min.css" rel="stylesheet" />*@
+
+
+    <link href="~/plugins/template/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <link href="~/plugins/template/css/plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/plugins/template/css/style.css" rel="stylesheet" />
+
+    <!-- Gritter -->
+    <link href="~/plugins/template/js/plugins/gritter/jquery.gritter.css" rel="stylesheet" />
+    <link href="~/plugins/template/css/animate.css" rel="stylesheet" />
+
+    <link href="~/plugins/template/css/plugins/dataTables/datatables.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.ckeditor.com/4.16.1/standard-all/ckeditor.js"></script>
+
+</head>
+<body>
+    <input type="hidden" class="isAlertPresent" value="@isAlertPresent.ToString()">
+    <div id="wrapper">
+
+
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element user-profile-container">
+                            @*  <img alt="image" class="logged-in-user-img" src="~/StaticImages/LoginIMG.jpg" /> *@
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    @if (User.IsInRole("admin"))
+                                    {
+                                        <span class="block m-t-xs font-bold css-large">Role : Admin</span>
+                                    }
+                                    @if (User.IsInRole("user"))
+                                    {
+                                        <span class="block m-t-xs font-bold css-large">Role: User</span>
+                                    }
+                                    <span class="block m-t-xs font-bold css-large">@User.Identity.Name</span>
+                                </a>
+                                <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+
+                                    <li class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="/Login/logout">Logout</a></li>
+                                </ul>
+                            }
+                        </div>
+                        <div class="logo-element">
+                        </div>
+                    </li>
+
+                    <li class="active">
+                        <a href="/Dashboard/Index"><i class="fa fa-desktop" title="Dashboard"></i> <span class="nav-label">Dashboard</span></a>
+                    </li>
+
+                    <li class="active">
+                        <a href="/Category/List"><i class="fa fa-desktop" title="Category"></i> <span class="nav-label">Category</span></a>
+                    </li>
+
+                    <li class="active">
+                        <a href="/CustomerControllers/List"><i class="fa fa-desktop" title="Customer"></i> <span class="nav-label">Customer</span></a>
+                    </li>
+
+                    <li class="active">
+                        <a href="/AddProduct/List"><i class="fa fa-desktop" title="AddProduct"></i> <span class="nav-label">AddProduct</span></a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Access Control </span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="/Login/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="block m-t-xs font-bold css-large">@User.Identity.Name</span>
+                        </li>
+                        <li>
+                            <a href="/Login/logout">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </nav>
+            </div>
+
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @* <script src="~/Scripts/Common/Common.js"></script> *@
+
+
+    <!-- Mainly scripts -->
+    @*<script src="~/template/js/jquery-2.1.1.js"></script>*@
+    <script src="~/plugins/template/js/popper.min.js"></script>
+    @* <script src="~/template/js/bootstrap.js"></script>*@
+
+    <script src="~/plugins/template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/plugins/template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="~/plugins/template/js/inspinia.js"></script>
+    <script src="~/plugins/template/js/plugins/pace/pace.min.js"></script>
+
+    <!-- jQuery UI -->
+    @*   <script src="~/template/js/plugins/jquery-ui/jquery-ui.min.js"></script>*@
+
+    <!-- GITTER -->
+    <script src="~/plugins/template/js/plugins/gritter/jquery.gritter.min.js"></script>
+    <script src="~/plugins/template/js/plugins/toastr/toastr.min.js"></script>
+    <script src="~/plugins/template/js/plugins/dataTables/datatables.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/notify.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            if ($('.isAlertPresent').val() == 'True') {
+
+                let alertDetail = JSON.parse('@Html.Raw(userInfoJson)');
+
+                ShowToastMessage(alertDetail.message_type, alertDetail.message);
+            }
+        });
+
+
+
+    </script>
+
+
+    <script type="text/javascript">
+        CKEDITOR.stylesSet.add('my_custom_style', [
+            // Block Styles
+            { name: 'Blue Title', element: 'h3', styles: { 'color': 'Blue' } },
+            { name: 'Red Title', element: 'h3', styles: { 'color': 'Red' } },
+            // Inline Styles
+            { name: 'Marker: Yellow', element: 'span', styles: { 'background-color': 'Yellow' } },
+            { name: 'Marker: Green', element: 'span', styles: { 'background-color': 'Lime' } },
+            // Object Styles
+            {
+                name: 'Image on Left',
+                element: 'img',
+                attributes: {
+                    style: 'padding: 5px; margin-right: 5px',
+                    border: '2',
+                    align: 'left'
+                }
+            },
+            {
+                name: 'Image on right',
+                element: 'img',
+                attributes: {
+                    style: 'padding: 5px; margin-left: 5px',
+                    border: '2',
+                    align: 'right'
+                }
+            },
+            { name: 'My Custom Block', element: 'h3', styles: { color: 'blue' } },
+            { name: 'Image Border', element: 'img', attributes: { 'class': 'img-thumbnail' } },
+            { name: 'Custom Bullets', element: 'ul', attributes: { 'class': 'bullets' } }
+        ]);
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

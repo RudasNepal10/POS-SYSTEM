@@ -1,0 +1,131 @@
+﻿@model infrastructurre.DTO.AddProductDTO;
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+    <div class="AddProduct">
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+
+            <div class="ibox-title">
+                <h5>Add Products</h5>
+                <a href="/AddProduct/List" class="btn btn-w-m btn-outline-primary m-l m-b-xs text-right"><i class="fa fa-long-arrow-up"></i>Back To List</a>
+            </div>
+
+            <div class="col-lg-9">
+
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" action="Create" enctype="multipart/form-data" class="row g-3">
+
+                            <div class="col-md-4">
+                                <label class="form-label">Category</label>
+                                @Html.DropDownList("category_id", ViewBag.CategoryList as SelectList, "-- Select --", new { @Class = "form-control", required = "required" })
+                                @Html.ValidationMessageFor(a => a.category_id, null, new { @Class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="inputText" class="form-label">Productname</label>
+                                @Html.TextBoxFor(a => a.Productname, new { type = "text", placeholder = "Productname", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Productname, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="    col-md-4">
+                                <label for="inputText" class="form-label">Quantity</label>
+                                @Html.TextBoxFor(a => a.Quantity, new { placeholder = "0", @Class = "form-control", required = "required", type = "number", min = "0", step = "1" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Quantity, null, new { @Class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="    col-md-4">
+                                <label for="inputText" class="form-label">Price</label>
+                                @Html.TextBoxFor(a => a.Price, new { placeholder = "$", @Class = "form-control", required = "required", type = "number", min = "0", step = "1" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Price, null, new { @Class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="inputText" class="form-label">Description</label>
+                                @Html.TextBoxFor(a => a.Description, new { placeholder = "Description", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Description, null, new { @Class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <label for="inputText" class="form-label">Product Photo</label>
+                                <input type="file" id="file" name="ImageFile" class="form-control" />
+                                @*  @Html.ValidationMessageFor(a => a.ImageFile, null, new { @Class = "text-danger" }) *@
+                            </div>
+
+
+
+                            <div class="col-15">
+                                <button class="btn btn-primary" type="submit">Save form</button>
+                            </div>
+
+                        </form>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card card-default">
+                    <div class="card-body text-center">
+                        <div class="">
+                            <h4 class="m-0 text-bold text-center">Preview</h4>
+                            <div class="images-list images" id="previewImg">
+                                <img id="image" class="image-preview images manualimgsize" width="100%" src="#" alt="" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+</body>
+
+
+</html>
+
+
+
+@section scripts {
+    <script>
+
+        $("#file").change(function () {
+            readURL(this);
+        });
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
+}

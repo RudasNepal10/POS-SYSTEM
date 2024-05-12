@@ -1,0 +1,73 @@
+﻿@model infrastructurre.DTO.CustomerDTO;
+
+@{
+    ViewData["Title"] = "Create";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+    <div class="Update Customer">
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Update Customer</h5>
+                        @using (Html.BeginForm(FormMethod.Post, new { @Class = "row g-3" }))
+                        {
+                            <div class="col-md-4">
+                                <label for="inputText" class="form-label">CustomerName</label>
+                                @Html.TextBoxFor(a => a.CustomerName, new { placeholder = "Name", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.CustomerName, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputText" class="form-label">CustomerPhone</label>
+                                @Html.TextBoxFor(a => a.CustomerPhone, new { placeholder = "$", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.CustomerPhone, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="    col-md-4">
+                                <label for="inputText" class="form-label">CustomerEmail</label>
+                                @Html.TextBoxFor(a => a.CustomerEmail, new { placeholder = "Email", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.CustomerEmail, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="    col-md-4">
+                                <label for="inputText" class="form-label">Address</label>
+                                @Html.TextBoxFor(a => a.Address, new { placeholder = "Address", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Address, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Update form</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+﻿@model infrastructurre.DTO.AddProductDTO;
+
+@{
+    ViewData["Title"] = "Create";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+    <div class="Update Product">
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-9">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Update Product</h5>
+                          <form method="post" action="Update" enctype="multipart/form-data" class="row g-3">
+                            @Html.HiddenFor(a => a.Id)
+                            <div class="col-md-4">
+                                <label class="form-label">Category</label>
+                                @Html.DropDownList("category_id", ViewBag.CategoryList as SelectList, "-- Select --", new { @Class = "form-control", required = "required" })
+                                @Html.ValidationMessageFor(a => a.category_id, null, new { @Class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="inputText" class="form-label">ProductName</label>
+                                @Html.TextBoxFor(a => a.Productname, new { type = "text", placeholder = "Name", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Productname, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputText" class="form-label">Quantity</label>
+                                @Html.TextBoxFor(a => a.Quantity, new { placeholder = "Quantity", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Quantity, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputText" class="form-label">Price</label>
+                                @Html.TextBoxFor(a => a.Price, new { placeholder = "$", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Price, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="    col-md-4">
+                                <label for="inputText" class="form-label">Description</label>
+                                @Html.TextBoxFor(a => a.Description, new { placeholder = "Description", @Class = "form-control", required = "required" })
+                                <div class="invalid-feedback">
+                                    @Html.ValidationMessageFor(a => a.Description, null, new { @Class = "text-danger" })
+                                </div>
+
+                            </div>
+
+                            <div class="row mt-4 col-md-12">
+                                <div class="col-lg-6">
+                                    <label for="inputText" class="form-label">Product Photo</label>
+                                    <input type="file" id="file" name="ImageFile" value="@Model.FileName" class="form-control" />
+                                </div>
+                                <div class="images-list images col-lg-6">
+                                    <img class="image-preview images manualimgsize img-thumbnail" width="60%" src="~/Product/@Model.FileName" alt="Photo">
+                                </div>
+                            </div>
+
+
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Update form</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="card card-default">
+                    <div class="card-body text-center">
+                        <div class="">
+                            <h4 class="m-0 text-bold text-center">Preview</h4>
+                            <div class="images-list images" id="previewImg">
+                                <img id="image" class="image-preview images manualimgsize" width="100%" src="#" alt="" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+</body>
+
+</html>
+
+@section scripts {
+    <script src="~/template/js/plugins/bs-custom-file/bs-custom-file-input.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('BlogDescription');
+            bsCustomFileInput.init();
+        });
+
+
+        $("#file").change(function () {
+            readURL(this);
+        });
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}
+
