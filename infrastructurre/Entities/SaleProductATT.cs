@@ -33,6 +33,9 @@ namespace infrastructurre.Entities
         public long id { get; set; }
          public long product_id { get; set;}
 
+        [ForeignKey(nameof(product_id))]
+        public virtual AddProductATT ProductATT { get; set; }
+
         public long sales_id { get; set; }
         [ForeignKey(nameof(sales_id))]
         public virtual SaleProductATT Sales { get; set; }

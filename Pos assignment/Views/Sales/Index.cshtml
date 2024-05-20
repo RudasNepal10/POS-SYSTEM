@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+    <div class="AddSales">
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="ibox col-lg-12">
+                <div class="ibox-title">
+                    <h5>Add Sales</h5>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <form class="row g-3" id="salesForm">
+                            <div class="row col-md-12">
+                                <div class="col-md-4">
+                                    <label class="form-label">Product</label>
+                                    <select id="" class="form-control" data-bind='options: productlist, optionsText: "productname",
+optionsValue: "id", value: product, optionsCaption: "---Select---"'>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="inputText" class="form-label">Quantity</label>
+                                    <input type="text" class="form-control" placeholder="quantity" data-bind="value: quantity" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary btn-addProduct" data-bind='click: addProduct' type="button" style="margin-top: 25px;">Add</button>
+                                </div>
+
+                                <div class="mt-4 col-md-9">
+                                    <h1 class="text-center" style="color:red">Item List</h1>
+
+                                    <table id="productTable" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Quantity</th>
+                                                <th>Total Price</th>
+                                                <th>Total Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind='foreach: addedProductList'>
+                                            <tr>
+                                                <td data-bind="text: productName"></td>
+                                                <td data-bind="text: quantity"></td>
+                                                <td data-bind="text: productPrice"></td>
+                                                <td data-bind="text: productAmount"></td>
+                                                <td><button data-bind='click: $root.removeProduct' class="btn btn-danger btn-removeProduct">Remove</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4 col-md-12">
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Customer</label>
+                                    <select id="" class="form-control" data-bind='options: customerList, optionsText: "customerName",
+optionsValue: "id", value: customer, optionsCaption: "---Select---"'>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Payment Method</label>
+                                    <select id="" class="form-control" data-bind='options: paymentmethodList, optionsText: "name",
+optionsValue: "id", value: paymentmethod, optionsCaption: "---Select---"'>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Paid Amount</label>
+                                    <input type="text" class="form-control" placeholder="amount" data-bind='value: userAmount' />
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-4 mt-4">
+                                <button class="btn btn-primary" data-bind='click : $root.save' type="button">Add to cart</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+</body>
+
+
+</html>
+
+@section scripts {
+    <script src="~/page_script/sales.js"></script>
+}
+
+

@@ -22,17 +22,17 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="Create" enctype="multipart/form-data" class="row g-3">
+                        <form method="post" action="Create" enctype="multipart/form-data" class="row g-3" id="salesForm">
                             <div class="row col-md-12">
                                 <div class="col-md-4">
                                     <label class="form-label">Product</label>
-                                    @Html.DropDownList("product_id", ViewBag.ProductList as SelectList, "-- Select --", new { @Class = "form-control", required = "required" })
+                                    @Html.DropDownList("product_id", ViewBag.ProductList as SelectList, "-- Select --", new { @Class = "form-control" })
                                     @Html.ValidationMessageFor(a => a.product_id, null, new { @Class = "text-danger" })
                                 </div>
 
                                 <div class="col-md-4">
                                     <label for="inputText" class="form-label">Quantity</label>
-                                    @Html.TextBoxFor(a => a.quantity, new { placeholder = "0", @Class = "form-control", required = "required", type = "number", min = "0", step = "1" })
+                                    @Html.TextBoxFor(a => a.quantity, new { placeholder = "0", @Class = "form-control", type = "number", min = "0", step = "1" })
                                     <div class="invalid-feedback">
                                         @Html.ValidationMessageFor(a => a.quantity, null, new { @Class = "text-danger" })
                                     </div>
@@ -106,18 +106,17 @@
 
 @section scripts {
     <script>
-
-
         $(document).ready(function () {
             $('.btn-addProduct').on('click', function () {
                 var selectedValue = $('#product_id').val();
                 var quantity = $('#quantity').val();
                 var selectedText = $('#product_id option:selected').text();
 
-                // Check if the selected value is empty
                 if (selectedValue === '') {
-                    ShowToastMessage('error', 'Please select a product.')
+                    $('#productError').text('Please select a product.');
                     return;
+                } else {
+                    $('#productError').text('');
                 }
 
                 // Check if the product already exists in the table
@@ -132,22 +131,63 @@
 
                 if (!exists) {
                     // Append the selected values to the table
-                    $('#productTable tbody').append('<tr><td>' + selectedText + '</td><td>' + quantity + '</td><td><button class="btn btn-danger btn-removeProduct">Remove</button></td></tr>');
+                    var newRow = '<tr><td>' + selectedText + '</td><td>' + quantity + '</td><td><input type="hidden" name="productId" value="' + selectedValue + '"><button class="btn btn-danger btn-removeProduct">Remove</button></td></tr>';
+                    $('#productTable tbody').append(newRow);
 
                     // Clear the form fields
                     $('#product_id').val('');
                     $('#quantity').val('');
                 } else {
-                    ShowToastMessage('error', 'Product Already Exists in the table.')
+                    alert('Product already exists in the table!');
                 }
             });
 
             // Remove row from table when remove button clicked
             $(document).on('click', '.btn-removeProduct', function () {
-                $(this).closest('tr').remove();
-                ShowToastMessage('success', 'Product removed.')
+                $(this).closest('tr').remove();     
+            });
+
+            // Form submission handling
+            $('#salesForm').submit(function (e) {
+                e.preventDefault(); // Prevent default form submission
+
+                // Serialize the table data
+                var salesData = [];
+                $('#productTable tbody tr').each(function () {
+                    var rowData = {};
+                    rowData.product_id = $(this).find('input[name="productId"]').val();
+                    rowData.product = $(this).find('td:first-child').text();
+                    rowData.quantity = $(this).find('td:nth-child(2)').text();
+                    salesData.push(rowData);
+                });
+
+                var selectedCustomer = $('#customer_Id option:selected').val();
+
+                var selectedPaymentMethod = $('#payment_method_id option:selected').val();
+
+                var finaldata = {
+                    customer_Id: +selectedCustomer,
+                    payment_method_id: +selectedPaymentMethod,
+                    SalesProduct: salesData
+                }
+
+                postReqArr('/saleProduct/Save', finaldata, null, res => {
+                    console.log(res,'resfrompost')
+                })
             });
         });
 
+
+        function postReqArr(url, data, constr, arr, fnClear = null, redir = null) {
+            $.ajaxSetup({ async: false });
+            return $.post(url, data, function (result, status, xhr) {
+                var res = JSON.parse(result);
+                console.log(res,'response')
+
+            }).done(() => {
+            }).fail((xhr, status, message) => {
+            });
+        }
     </script>
+
 }

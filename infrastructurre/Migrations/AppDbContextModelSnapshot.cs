@@ -308,6 +308,9 @@ namespace infrastructurre.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Paidamount")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("PaymentMethod", "DBSchema");
@@ -360,6 +363,8 @@ namespace infrastructurre.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("id");
+
+                    b.HasIndex("product_id");
 
                     b.HasIndex("sales_id");
 
@@ -449,11 +454,19 @@ namespace infrastructurre.Migrations
 
             modelBuilder.Entity("infrastructurre.Entities.SalesProduct", b =>
                 {
+                    b.HasOne("infrastructurre.Entities.AddProductATT", "ProductATT")
+                        .WithMany()
+                        .HasForeignKey("product_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("infrastructurre.Entities.SaleProductATT", "Sales")
                         .WithMany("SalesProduct")
                         .HasForeignKey("sales_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ProductATT");
 
                     b.Navigation("Sales");
                 });

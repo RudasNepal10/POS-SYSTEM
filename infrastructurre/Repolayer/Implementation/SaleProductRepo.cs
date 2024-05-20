@@ -12,16 +12,35 @@ namespace infrastructurre.Repolayer.Implementation
     public class SaleProductRepo : ISaleProductRepo
     {
         private readonly IBaseRepo<SaleProductATT> _repo;
+        private readonly IBaseRepo<SalesProduct> _sprepo;
         private readonly IBaseRepo<PaymentMethodATT> _paymentrepo;
-        public SaleProductRepo(IBaseRepo<SaleProductATT>repo, IBaseRepo<PaymentMethodATT> paymentrepo)
+
+        public SaleProductRepo(IBaseRepo<SaleProductATT>repo, IBaseRepo<PaymentMethodATT> paymentrepo, IBaseRepo<SalesProduct> sprepo)
         {
             _repo = repo;
             _paymentrepo = paymentrepo;
+            _sprepo = sprepo;   
+        }
+
+        private void savesalesproduct(SaleProductDTO dTO, long id) 
+        {
+         List<SalesProduct> entitylist=new List<SalesProduct>();
+         foreach(var item in dTO.SalesProduct)
+            {
+                entitylist.Add(new SalesProduct
+                {
+                    product_id = item.product_id,
+                    quantity = item.quantity,
+                    sales_id = id,
+                }) ;
+            }
+            _sprepo.InsertRange(entitylist);
         }
         public void save(SaleProductDTO dto) 
         {
          var mapdata = MapFromDtoToEntity(dto,new SaleProductATT());
          _repo.Insert(mapdata);
+         savesalesproduct(dto,mapdata.Id);
         }
         public List<SaleProductATT> List()
         {
@@ -51,19 +70,15 @@ namespace infrastructurre.Repolayer.Implementation
         }
         SaleProductATT MapFromDtoToEntity(SaleProductDTO dto, SaleProductATT entity) 
         {
-         //entity.ProductName = dto.ProductName;
-         //entity.SaleDate = dto.SaleDate;
-         //entity.TotalAmount = dto.TotalAmount;
-         //entity.Quantity = dto.Quantity;
-         return entity;
+            entity.customer_Id = dto.customer_Id;
+            entity.payment_method_id= dto.payment_method_id;
+            return entity;
         }
         SaleProductDTO MapFromEntityToDto(SaleProductDTO dto, SaleProductATT entity) 
         {
-         //dto.ProductName = entity.ProductName;
-         //dto.SaleDate = entity.SaleDate;
-         //dto.TotalAmount = entity.TotalAmount;
-         //dto.Quantity = entity.Quantity;
-         return dto;
+            dto.customer_Id = entity.customer_Id;
+            dto.payment_method_id = entity.payment_method_id;
+            return dto;
         
         }
 

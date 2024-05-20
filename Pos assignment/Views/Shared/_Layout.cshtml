@@ -25,6 +25,8 @@
     <title>@ViewData["Title"] - Maskey Grocery Mart</title>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/common.js"></script>
+    <script src="~/knockout/knockout-3.5.1.js"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
@@ -101,6 +103,10 @@
                     <li class="active">
                         <a href="/saleProduct/Create"><i class="fa fa-desktop" title="Add Sales"></i> <span class="nav-label">Add Sales</span></a>
                     </li>
+                    <li class="active">
+                        <a href="/Sales/Index"><i class="fa fa-desktop" title="Add Sales"></i> <span class="nav-label">New Sales</span></a>
+                    </li>
+                    
 
                     <li>
                         <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Access Control </span><span class="fa arrow"></span></a>
@@ -137,6 +143,8 @@
         </div>
     </div>
 
+
+    
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @* <script src="~/Scripts/Common/Common.js"></script> *@
 
@@ -160,6 +168,7 @@
     <script src="~/plugins/template/js/plugins/gritter/jquery.gritter.min.js"></script>
     <script src="~/plugins/template/js/plugins/toastr/toastr.min.js"></script>
     <script src="~/plugins/template/js/plugins/dataTables/datatables.min.js"></script>
+    
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/notify.js"></script>
     <script type="text/javascript">

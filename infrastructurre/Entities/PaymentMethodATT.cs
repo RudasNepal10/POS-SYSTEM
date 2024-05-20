@@ -10,5 +10,8 @@ namespace infrastructurre.Entities
     public class PaymentMethodATT : BaseEntities
     {
         public string Name { get; set; }
+
+        public string Paidamount {  get; set; } 
+ 
     }
 }

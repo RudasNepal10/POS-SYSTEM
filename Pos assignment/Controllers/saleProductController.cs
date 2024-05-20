@@ -17,7 +17,6 @@ namespace Pos_assignment.Controllers
             _SaleProductrepo = saleproductrepo;
             _productrepo = productrepo;
             _customerrepo = customerrepo;
-
         }
         public IActionResult Create()
         {
@@ -34,7 +33,7 @@ namespace Pos_assignment.Controllers
         [HttpPost]
         public IActionResult Create(SaleProductDTO dto)
         {
-             if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _SaleProductrepo.save(dto);
                 AlertHelper.setMessage(this, "Product Succssfully Saved");
@@ -57,7 +56,7 @@ namespace Pos_assignment.Controllers
                 return View(dto);
             }
             catch (Exception ex)
-            {
+            { 
                 return View();
             }
 
@@ -72,6 +71,21 @@ namespace Pos_assignment.Controllers
             }
             return View(dto);
 
+        }
+
+
+
+        [HttpPost]
+        public string Save(SaleProductDTO data)
+        {
+          
+            {
+                _SaleProductrepo.save(data);
+                AlertHelper.setMessage(this, "Product Succssfully Saved");
+                return "Saved";
+
+            }
+            
         }
 
     }

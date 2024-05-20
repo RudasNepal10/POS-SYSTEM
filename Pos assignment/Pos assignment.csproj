@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Knockout\" />
     <Folder Include="wwwroot\Product\" />
   </ItemGroup>
 
