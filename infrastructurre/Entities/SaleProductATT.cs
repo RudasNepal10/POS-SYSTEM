@@ -20,9 +20,8 @@ namespace infrastructurre.Entities
 
         [ForeignKey(nameof(payment_method_id))]
         public virtual PaymentMethodATT PaymentMethod { get; set; }
-
         public decimal total_amount { get; set; }
-
+        public decimal paid_amount { get; set; }
         public virtual List<SalesProduct> SalesProduct { get; set; } = new List<SalesProduct>();
     }
 
@@ -30,8 +29,9 @@ namespace infrastructurre.Entities
     public class SalesProduct
     {
         public decimal quantity { get; set; }
+        public decimal total_prod_amount { get; set; }
         public long id { get; set; }
-         public long product_id { get; set;}
+        public long product_id { get; set; }
 
         [ForeignKey(nameof(product_id))]
         public virtual AddProductATT ProductATT { get; set; }
@@ -39,6 +39,6 @@ namespace infrastructurre.Entities
         public long sales_id { get; set; }
         [ForeignKey(nameof(sales_id))]
         public virtual SaleProductATT Sales { get; set; }
-       
+
     }
 }

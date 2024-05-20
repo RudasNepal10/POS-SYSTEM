@@ -20,7 +20,7 @@ namespace infrastructurre.DTO
         public decimal total_amount { get; set; }
         public long product_id { get; set; }
 
-        public decimal paidamount {  get; set; }    
+        public decimal paid_amount {  get; set; }    
 
         public List<SalesProductDTO> SalesProduct { get; set; } = new List<SalesProductDTO>();
 
@@ -32,7 +32,7 @@ namespace infrastructurre.DTO
         public long id { get; set; }
         public long product_id { get; set; }
         public long sales_id { get; set; }
-        public decimal paidamount { get; set; } 
+        public decimal total_prod_amount { get; set; } 
        
     }
 }
