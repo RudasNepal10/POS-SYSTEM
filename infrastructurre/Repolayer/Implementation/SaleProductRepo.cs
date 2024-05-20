@@ -32,6 +32,7 @@ namespace infrastructurre.Repolayer.Implementation
                     product_id = item.product_id,
                     quantity = item.quantity,
                     sales_id = id,
+                    total_prod_amount = item.total_prod_amount,
                 }) ;
             }
             _sprepo.InsertRange(entitylist);
@@ -72,6 +73,7 @@ namespace infrastructurre.Repolayer.Implementation
         {
             entity.customer_Id = dto.customer_Id;
             entity.payment_method_id= dto.payment_method_id;
+            entity.paid_amount= dto.paid_amount;
             return entity;
         }
         SaleProductDTO MapFromEntityToDto(SaleProductDTO dto, SaleProductATT entity) 

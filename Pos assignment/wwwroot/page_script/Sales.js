@@ -1,10 +1,9 @@
-function salesVM()
-{
+function salesVM() {
     var self = this;
     self.product = ko.observable();
     self.quantity = ko.observable();
-    
-    self.customer= ko.observable();
+
+    self.customer = ko.observable();
     self.paymentmethod = ko.observable();
     self.totalamount = ko.observable();
     self.userAmount = ko.observable();
@@ -22,6 +21,14 @@ function salesVM()
 
     self.addedProductList = ko.observableArray([]);
 
+
+    self.customerName = ko.observable();
+    self.paymentmethodName = ko.observable();
+    self.GroceryName = ko.observable('Maskey Grocery');
+
+
+
+    self.entryDate = ko.observable(new Date().toDateString());
 
 
     self.AddValidation = function () {
@@ -50,10 +57,10 @@ function salesVM()
             var prod_name = self.productlist().filter(x => x.id == self.product())[0].productname;
             var prod_price = self.productlist().filter(x => x.id == self.product())[0].price;
             var rowdata = {};
-            rowdata.productId = self.product();
+            rowdata.product_id = self.product();
             rowdata.productName = prod_name;
             rowdata.productPrice = prod_price;
-            rowdata.productAmount = self.quantity() * prod_price;
+            rowdata.total_prod_amount = self.quantity() * prod_price;
             rowdata.quantity = self.quantity();
             self.addedProductList.push(rowdata);
 
@@ -84,7 +91,7 @@ function salesVM()
             errormessage += '1';
         }
 
-        if (self.addedProductList().length < 1 ) {
+        if (self.addedProductList().length < 1) {
             ShowToastMessage('error', 'Please Select at least one product');
             errormessage += '1';
         }
@@ -97,11 +104,45 @@ function salesVM()
         }
     }
 
-        
+
     self.save = function () {
+        $('#modal-container').modal('show');
+
+        
         if (self.savevalidation()) {
             console.log(self.addedProductList(), self.customer(), self.paymentmethod(), self.userAmount(), 'amount');
+
+
+            var customerName = self.customerList().filter(x => x.id == self.customer())[0].customerName;
+            var paymemtMethod = self.paymentmethodList().filter(x => x.id == self.paymentmethod())[0].name;
+
+
+            self.customerName(customerName);
+            self.paymentmethodName(paymemtMethod);
+
+            var finalData = {
+                customer_Id: self.customer(),
+                payment_method_id: self.paymentmethod(),
+                paid_amount: self.userAmount(),
+                SalesProduct: self.addedProductList()
+            }
+
+            //postRequest('/Sales/SaveSales', finalData, res => {
+            //    console.log(res, 'res');
+            //})
         }
+    }
+
+    self.closeModal = function () {
+        $('#modal-container').modal('hide');
+    }
+
+    self.print = function () {
+        var divContents = document.getElementById("div-to-print").innerHTML;
+        var a = window.open('', '', 'height=500, width=500');
+        a.document.write(divContents);
+        a.document.close();
+        a.print(); 
     }
 
 

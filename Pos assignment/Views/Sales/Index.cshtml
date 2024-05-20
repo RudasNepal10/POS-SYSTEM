@@ -44,7 +44,7 @@ optionsValue: "id", value: product, optionsCaption: "---Select---"'>
                                                 <th>Product</th>
                                                 <th>Quantity</th>
                                                 <th>Total Price</th>
-                                                <th>Total Amount</th>
+                                                <th>Product Total Amount</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -53,7 +53,7 @@ optionsValue: "id", value: product, optionsCaption: "---Select---"'>
                                                 <td data-bind="text: productName"></td>
                                                 <td data-bind="text: quantity"></td>
                                                 <td data-bind="text: productPrice"></td>
-                                                <td data-bind="text: productAmount"></td>
+                                                <td data-bind="text: total_prod_amount"></td>
                                                 <td><button data-bind='click: $root.removeProduct' class="btn btn-danger btn-removeProduct">Remove</button></td>
                                             </tr>
                                         </tbody>
@@ -98,10 +98,68 @@ optionsValue: "id", value: paymentmethod, optionsCaption: "---Select---"'>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+
+    
+    <div class="modal inmodal fade" id="modal-container" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="padding:0px 10px;">
+                    <h4 class="modal-title">Receipt</h4>
+                </div>
+                <div class="modal-body" id="div-to-print">
+                    <div class="mt-4 col-md-9">
+
+                        <p class="text-center">Grocery Name : <span data-bind='text: $root.GroceryName'></span></p>
+                        <p class="text-center">Customer Name: <span data-bind='text: $root.customerName'></span></p>
+                        <p class="text-center">Payment Method: <span data-bind='text: $root.paymentmethodName'></span></p>
+                        <p class="text-center">Date : <span data-bind='text: $root.entryDate'></span></p>
+
+                        <h1 class="text-center" style="color:red">Item List</h1>
+
+                        <table id="productTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Total Price</th>
+                                    <th>Product Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind='foreach: addedProductList'>
+                                <tr>
+                                    <td data-bind="text: productName"></td>
+                                    <td data-bind="text: quantity"></td>
+                                    <td data-bind="text: productPrice"></td>
+                                    <td data-bind="text: total_prod_amount"></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>1000</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>  
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-bind="click : $root.closeModal" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" data-bind="click : $root.print" class="btn btn-primary">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 
+
 </html>
+
+
+
+<!-- The Modal -->
+
 
 @section scripts {
     <script src="~/page_script/sales.js"></script>
