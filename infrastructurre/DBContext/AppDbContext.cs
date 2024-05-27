@@ -24,8 +24,6 @@ namespace infrastructurre.DBContext
         public DbSet<PaymentMethodATT> PaymentMethod { get; set; }
         public DbSet<SalesProduct> SalesProduct { get; set; }
 
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.HasDefaultSchema("DBSchema");

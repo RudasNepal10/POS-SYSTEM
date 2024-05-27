@@ -1,12 +1,14 @@
 ﻿using infrastructurre.DTO;
 using infrastructurre.Repolayer.Implementation;
 using infrastructurre.Repolayer.Inferface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Pos_assignment.Helpers;
 
 namespace Pos_assignment.Controllers
 {
+    [Authorize]
     public class CustomerControllers : Controller
     {
         private readonly ICustomerRepo _customerrepo;

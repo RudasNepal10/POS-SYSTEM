@@ -74,6 +74,11 @@ namespace infrastructurre.Repolayer.Implementation
             entity.customer_Id = dto.customer_Id;
             entity.payment_method_id= dto.payment_method_id;
             entity.paid_amount= dto.paid_amount;
+            entity.total_amount= dto.total_amount;
+            entity.vat_amount= dto.vat_amount;
+            entity.return_amount= dto.return_amount;
+            entity.due_amount= dto.due_amount;
+            //entity.sales_date= DateTime.Now;
             return entity;
         }
         SaleProductDTO MapFromEntityToDto(SaleProductDTO dto, SaleProductATT entity) 

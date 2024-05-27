@@ -1,10 +1,12 @@
 ﻿using infrastructurre.DTO;
 using infrastructurre.Repolayer.Inferface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pos_assignment.Helpers;
 
 namespace Pos_assignment.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepo _categoryrepo;

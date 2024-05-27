@@ -5,8 +5,7 @@ function salesVM() {
 
     self.customer = ko.observable();
     self.paymentmethod = ko.observable();
-    self.totalamount = ko.observable();
-    self.userAmount = ko.observable();
+    self.userAmount = ko.observable(0);
 
     //workinglist
     self.productlist = ko.observableArray([]);
@@ -17,7 +16,6 @@ function salesVM() {
     postRequest('/Sales/GetAllCustomer', null, self.customerList);
     postRequest('/Sales/GetAllPaymentMethod', null, self.paymentmethodList);
 
-    console.log(self.paymentmethodList())
 
     self.addedProductList = ko.observableArray([]);
 
@@ -29,6 +27,7 @@ function salesVM() {
 
 
     self.entryDate = ko.observable(new Date().toDateString());
+
 
 
     self.AddValidation = function () {
@@ -69,6 +68,29 @@ function salesVM() {
         }
     }
 
+    self.totalamount = ko.computed(function () {
+        return self.addedProductList().reduce((acc, product) => acc + product.total_prod_amount, 0);
+    }, this);
+
+    self.VAT = ko.computed(function () {
+        return parseFloat(13 / 100 * self.totalamount()).toFixed(2);
+    }, this);
+
+
+    self.grandTotal = ko.computed(function () {
+        return self.totalamount() +  +self.VAT();
+    }, this);
+
+    self.dueAmount = ko.computed(function () {
+        var due = parseFloat(self.grandTotal()) - parseFloat(self.userAmount());
+        return due > 0 ? due.toFixed(2) : "0.00";
+    }, this);
+
+    self.returnAmount = ko.computed(function () {
+        var returnAmount = parseFloat(self.userAmount()) - parseFloat(self.grandTotal());
+        return returnAmount > 0 ? returnAmount.toFixed(2) : "0.00";
+    }, this);
+
     self.removeProduct = function (data) {
         self.addedProductList.remove(data);
     }
@@ -106,16 +128,9 @@ function salesVM() {
 
 
     self.save = function () {
-        $('#modal-container').modal('show');
-
-        
         if (self.savevalidation()) {
-            console.log(self.addedProductList(), self.customer(), self.paymentmethod(), self.userAmount(), 'amount');
-
-
             var customerName = self.customerList().filter(x => x.id == self.customer())[0].customerName;
             var paymemtMethod = self.paymentmethodList().filter(x => x.id == self.paymentmethod())[0].name;
-
 
             self.customerName(customerName);
             self.paymentmethodName(paymemtMethod);
@@ -124,12 +139,18 @@ function salesVM() {
                 customer_Id: self.customer(),
                 payment_method_id: self.paymentmethod(),
                 paid_amount: self.userAmount(),
-                SalesProduct: self.addedProductList()
+                vat_amount: self.VAT(),
+                total_amount: self.totalamount(),
+                SalesProduct: self.addedProductList(),
+                due_amount: self.dueAmount(),
+                return_amount: self.returnAmount()
             }
 
-            //postRequest('/Sales/SaveSales', finalData, res => {
-            //    console.log(res, 'res');
-            //})
+            $('#modal-container').modal('show');
+
+            postRequest('/Sales/SaveSales', finalData, res => {
+                ShowToastMessage('success', 'Order Placed Successfully');
+            })
         }
     }
 

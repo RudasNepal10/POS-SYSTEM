@@ -15,14 +15,14 @@ namespace Pos_assignment.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         public LoginController(SignInManager<User> signInManager, UserManager<User> userManager)
-        { 
+        {
             _signInManager = signInManager;
             _userManager = userManager;
         }
-        
-        public IActionResult Index() 
-        { 
-         return View();
+
+        public IActionResult Index()
+        {
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> Index(LoginDTO model)
@@ -74,8 +74,9 @@ namespace Pos_assignment.Controllers
         }
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Index");
+           // await HttpContext.SignOutAsync();
+            await _signInManager.SignOutAsync();
+            return View("Index");
         }
     }
 }

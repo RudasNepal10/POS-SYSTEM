@@ -12,7 +12,6 @@ namespace infrastructurre.Entities
 {
     public class SaleProductATT : BaseEntities
     {
-        public decimal quantity { get; set; }
         public long customer_Id { get; set; }
         [ForeignKey(nameof(customer_Id))]
         public virtual CustomerATT Customer { get; set; }
@@ -21,7 +20,11 @@ namespace infrastructurre.Entities
         [ForeignKey(nameof(payment_method_id))]
         public virtual PaymentMethodATT PaymentMethod { get; set; }
         public decimal total_amount { get; set; }
+        public decimal vat_amount { get; set; }
+        public decimal due_amount { get; set; }
+        public decimal return_amount { get; set; }
         public decimal paid_amount { get; set; }
+        public string sales_date { get; set; } = DateTime.Now.ToString();
         public virtual List<SalesProduct> SalesProduct { get; set; } = new List<SalesProduct>();
     }
 

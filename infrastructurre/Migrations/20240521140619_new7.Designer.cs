@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using infrastructurre.DBContext;
@@ -11,9 +12,11 @@ using infrastructurre.DBContext;
 namespace infrastructurre.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240521140619_new7")]
+    partial class new7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -327,20 +330,14 @@ namespace infrastructurre.Migrations
                     b.Property<long>("customer_Id")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("due_amount")
-                        .HasColumnType("numeric");
-
                     b.Property<decimal>("paid_amount")
                         .HasColumnType("numeric");
 
                     b.Property<long>("payment_method_id")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("return_amount")
+                    b.Property<decimal>("quantity")
                         .HasColumnType("numeric");
-
-                    b.Property<string>("sales_date")
-                        .HasColumnType("text");
 
                     b.Property<decimal>("total_amount")
                         .HasColumnType("numeric");

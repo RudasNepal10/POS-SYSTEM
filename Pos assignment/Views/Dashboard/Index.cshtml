@@ -1,7 +1,68 @@
-﻿@using infrastructurre.DTO
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> signInManager;
+﻿@model infrastructurre.DTO.DashboardDTO;
 
+<div class="container mt-5">
+    <div class="alert alert-success" role="alert">
+        Logged in successfully.
+    </div>
 
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Category<span>-@Model.TotalCategories</span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Products<span>-@Model.TotalProducts</span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-purple text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Sales <span>-@Model.TotalSales</span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Customers <span>-@Model.TotalCustomers</span></h5>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    @* <div class="row mb-3">
+        <div class="col">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Orders Amount</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-secondary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Total Orders</h5>
+                </div>
+            </div>
+        </div>
+    </div> *@
+
+    <div class="card bg-light text-dark mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Total Amount <span>- $ @Model.TotalSalesAmount</span></h5>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-purple {
+        background-color: #6f42c1;
+    }
+</style>
 

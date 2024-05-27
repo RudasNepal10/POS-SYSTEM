@@ -1,11 +1,13 @@
 ﻿using infrastructurre.DTO;
 using infrastructurre.Entities;
 using infrastructurre.Repolayer.Inferface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pos_assignment.Helpers;
 
 namespace Pos_assignment.Controllers
 {
+    [Authorize]
     public class SalesController : Controller
     {
         private readonly ISaleProductRepo _SaleProductrepo;

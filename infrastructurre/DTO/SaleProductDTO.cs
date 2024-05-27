@@ -11,14 +11,12 @@ namespace infrastructurre.DTO
 {
     public class SaleProductDTO : BaseEntities
     {
-        public int quantity { get; set; }
-
         public long customer_Id { get; set; }
-
         public long payment_method_id { get; set; }
-
         public decimal total_amount { get; set; }
-        public long product_id { get; set; }
+        public decimal due_amount { get; set; }
+        public decimal return_amount { get; set; }
+        public decimal vat_amount { get; set; }
 
         public decimal paid_amount {  get; set; }    
 
@@ -31,7 +29,6 @@ namespace infrastructurre.DTO
         public decimal quantity { get; set; }
         public long id { get; set; }
         public long product_id { get; set; }
-        public long sales_id { get; set; }
         public decimal total_prod_amount { get; set; } 
        
     }

@@ -2,12 +2,14 @@
 using infrastructurre.Entities;
 using infrastructurre.Repolayer.Implementation;
 using infrastructurre.Repolayer.Inferface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Pos_assignment.Helpers;
 
 namespace Pos_assignment.Controllers
 {
+    [Authorize]
     public class AddProductController : Controller
     {
         private readonly IAddProductRepo _AddProductrepo;
