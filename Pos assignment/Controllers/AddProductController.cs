@@ -50,9 +50,8 @@ namespace Pos_assignment.Controllers
             {
                 var dto = _AddProductrepo.GetAddproductDataForUpdate(id);
                 List<CategoryATT> categoryList = _catRepo.List();
-                ViewBag.CategoryList = new SelectList(categoryList, "Id", "Categoryname",dto.category_id);
+                ViewBag.CategoryList = new SelectList(categoryList, "Id", "Categoryname", dto.category_id);
                 return View(dto);
-
             }
             catch (Exception ex)
             {

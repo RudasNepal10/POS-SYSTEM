@@ -66,7 +66,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
 });
 
-//for compressing data
+//for compressing data not needed
 builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
@@ -77,7 +77,7 @@ builder.Services.Configure<GzipCompressionProviderOptions>(option =>
            option.Level = System.IO.Compression.CompressionLevel.Optimal);
 
 //scrutor for Dependency injection 
-builder.Services.Scan(scan => scan
+builder.Services.Scan(scan => scan 
                 .FromAssembliesOf(typeof(IAddProductRepo), typeof(AddProductRepo))
                 .AddClasses()
                 .AsSelf()
@@ -85,7 +85,8 @@ builder.Services.Scan(scan => scan
                 WithScopedLifetime()
 );
 
-//builder.Services.AddScoped<ISubscriptionRepo, SubscriptionRepo>();
+//builder.Services.AddScoped<IAddProductRepo, AddProductRepo>();
+//builder.Services.AddScoped<IcategoryRepo, CategoryRepo>();
 
 builder.Services.AddSession();
 
