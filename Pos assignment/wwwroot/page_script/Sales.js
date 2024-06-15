@@ -52,6 +52,7 @@ function salesVM() {
 
 
     self.addProduct = function () {
+        console.log(self.productlist(), self.product())
         if (self.AddValidation()) {
             var prod_name = self.productlist().filter(x => x.id == self.product())[0].productname;
             var prod_price = self.productlist().filter(x => x.id == self.product())[0].price;
